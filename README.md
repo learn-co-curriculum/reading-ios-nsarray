@@ -1,4 +1,4 @@
-#NSArray
+#`NSArray`
 
 
 ##What is a collection?
@@ -22,7 +22,7 @@ These are:
 
 ##Creating an `NSArray`
 
-There are a number of ways to create a new NSArray, some of which instantiate the array with values; others which allow you to specify the values afterward.
+There are a number of ways to create a new `NSArray`, some of which instantiate the array with values; others which allow you to specify the values afterward.
 
 ######Example
 ```objc
@@ -40,7 +40,7 @@ NSArray *fifthArray = [NSArray arrayWithObjects: @1, @"Joe", @5, @"Flatiron", ni
 Note: For reasons we will not go into here, we do not suggest using `[NSArray array]` to initialize a new `NSArray`.
 
 
-##Querying an array
+##Querying `NSArray`
 
 ####`containsObject:`
 
@@ -99,7 +99,7 @@ NSNumber *numberAtIndexTwo = numbers[2];
 
 
 
-##Finding objects in arrays
+##Finding objects in `NSArray` objects
 
 ####`indexOfObject`:
 
@@ -113,7 +113,7 @@ NSArray *numbers = @[@1,@2,@3,@4,@5];
 NSNumber *theNumberThree = [numbers objectAtIndex:2];
 ```
 
-##Array enumeration
+##`NSArray` enumeration
 
 ###`makeObjectsPerformSelector:`
 
@@ -256,6 +256,28 @@ There are many more convenience methods on `NSMutableArray` that you may find in
 
 ## Sorting / filtering
 Check out our reading on [Sorting Basics](https://github.com/flatiron-school-curriculum/reading-ios-sorting-basic) and on [Filtering Basics](https://github.com/flatiron-school-curriculum/reading-ios-filtering-basic) to learn more on sorting and filtering collections (`NSArray` and `NSDictionary`).
+
+
+###Common errors
+
+####Index beyond bounds
+
+If you attempt to access a value outside of the range of the array, you will get the following error.
+```
+2014-10-30 09:32:49.386 arrayBlocks[13121:622056] *** Terminating app due to uncaught exception 'NSRangeException', reason: '*** -[__NSArrayI objectAtIndex:]: index 5 beyond bounds [0 .. 4]'
+```
+
+Here is some example code that will cause such an error.
+
+######Example
+```
+NSArray *testArray = @[@1,@2,@3,@4,@5];
+
+for (NSInteger i = 0; i <= [testArray count]; i++)
+    {
+        NSLog(@"%@", testArray[i]);
+    }
+```
 
 ##Conclusion
 
