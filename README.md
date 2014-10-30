@@ -117,6 +117,13 @@ NSNumber *theNumberThree = [numbers objectAtIndex:2];
 
 ###`makeObjectsPerformSelector:`
 
+This method runs the same method for every element in an array (of `SpaceShip` objects in this case.)
+
+```objc
+[spaceShips makeObjectsPerformSelector:@selector(attackEnemy:)];
+
+```
+
 ###`enumerateObjectsUsingBlock:`
 
 This method lets you perform an operation on the objects inside of an `NSArray`. It comes with a `BOOL` *pointer* which is unusual. The `BOOL` pointer allows you to stop the enumeration of objects if a certain condition is met.
