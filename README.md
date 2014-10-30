@@ -119,6 +119,7 @@ NSNumber *theNumberThree = [numbers objectAtIndex:2];
 
 This method runs the same method for every element in an array (of `SpaceShip` objects in this case.)
 
+######Example
 ```objc
 [spaceShips makeObjectsPerformSelector:@selector(attackEnemy:)];
 
