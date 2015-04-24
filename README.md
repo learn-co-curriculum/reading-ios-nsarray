@@ -155,7 +155,7 @@ In the above example, we have chosen to stop the enumeration prematurely by usin
 There are many other ways to enumerate an `NSArray` with conditions. Take a look at the documentation for more.
 
 ##Array sorting
-Check out our tutorial on [`NSSortDescriptor`](https://github.com/flatiron-school-curriculum/reading-ios-sorting-basic) for details on how to sort an array.
+Check out our tutorial on [`NSSortDescriptor`](https://github.com/learn-co-curriculum/reading-ios-sorting-basic) for details on how to sort an array.
 
 
 ##Comparing arrays
@@ -263,7 +263,7 @@ NSMutableArray *mutableTestArray = [[NSMutableArray alloc] initWithArray:@[@1,@2
 There are many more convenience methods on `NSMutableArray` that you may find interesting. Check them out in the [documentation](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSMutableArray_Class/)
 
 ## Sorting / filtering
-Check out our reading on [Sorting Basics](https://github.com/flatiron-school-curriculum/reading-ios-sorting-basic) and on [Filtering Basics](https://github.com/flatiron-school-curriculum/reading-ios-filtering-basic) to learn more on sorting and filtering collections (`NSArray` and `NSDictionary`).
+Check out our reading on [Sorting Basics](https://github.com/learn-co-curriculum/reading-ios-sorting-basic) and on [Filtering Basics](https://github.com/learn-co-curriculum/reading-ios-filtering-basic) to learn more on sorting and filtering collections (`NSArray` and `NSDictionary`).
 
 
 ###Common errors
