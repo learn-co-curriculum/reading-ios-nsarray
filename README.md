@@ -1,26 +1,90 @@
-#`NSArray`
+# `NSArray` & `NSMutableArray`
+
+## Objectives
+
+1. Understand the classification of collection types.
+2. Learn how to create an `NSArray` with literal syntax (`@[]`).
+3. Recognize method initializers and learn the role of `nil`.
+4. Learn how to query an array with methods and the literal syntax.
+
+## Introduction To Collection Types
+
+A collection types are objects which hold a group of other objects called "a collection". Collections can hold all of a single type (such as string objects) or contain a group of various types (called mixed types), and may or may not track the order of the objects for which they're responsible. 
+
+Since collections are objects themselves, a collection can contain other collections—this is how a matrix is created, by nesting a series of arrays within a parent array. 
+
+**Reminder:** *Primitives are not objects, so they can't be held in a collection. To place a primitive's value in a collection, it must be converted into an* `NSNumber` *object.*
+
+In Objective-C, collections are unaware of the types of the objects that they contain. So, when managing the contents of a collection, it is largely up to the programmer (that's you!) to keep track of what kinds of object are stored and retrieved from the collection.
+
+The common collection base types that you'll encounter in Objective-C are:
+
+```objc
+NSArray
+NSDictionary
+NSSet
+```
+This reading will cover the basics of the `NSArray` class.
+
+## Introduction To `NSArray`
+
+The workhorse of collection types is the array. In Objective-C, arrays take the form of the `NSArray`class. 
+
+**Note:** *The* `array` *class is inherited from C and called 'C-array'. They are not objects and will not behave how you expect, so avoid using them.*
+
+An `NSArray` will manage an ***ordered collection*** of objects. This distinction of managing an **ordered** collection is what makes `NSArray` the go-to class that it is. What this means is that whatever sequence the objects of an `NSArray` are defined in, that same sequence will be preserved for the life of the `NSArray`, or until it is overwritten entirely.
+
+**Advanced:** *The mutable array type* `NSMutableArray` *is capable of altering itself without being directly overwritten. It does, however, still maintain the order of the objects in its managed collection.*
+
+## Creating An `NSArray`
+
+#### The Literal Syntax
+
+You've seen literal syntax used for other object types in previous examples. Being the commonly used type that it is, `NSArray` has a literal syntax. It is `@[]`, with the contents of the array to be created listed inside the square brackets (`[``]`).
+
+```objc
+NSArray *instructors = @[ @"Joe", @"Tim", @"Jim", @"Tom", @"Mark" ];
+
+NSLog(@"%@", instructors);
+```
+This will print:
+
+```
+(
+    Joe,
+    Tim,
+    Jim,
+    Tom,
+    Mark
+)
+```
+The description of each object in the array's collection is printed on its own line. You'll notice too that the printout has the contents in the exact same order as the collection we initialized in the code.
+
+#### Initializer Methods
+
+The literal syntax for `NSArray` was actually only introduced in iOS 6. Since it's relatively new, it's important to know what the long-form syntax is that literal is calling on your behalf. This way you can recognize array initializers in examples or files that are than older 2012.
+
+```objc
+NSArray *instructors = [[NSArray alloc]initWithObjects:@"Joe", @"Tim", @"Jim", @"Tom", @"Mark", nil];
+```
+
+```objc
+NSArray *instructors = [NSArray alloc];
+[instructors initWithObjects:@"Joe", @"Tim", @"Jim", @"Tom", @"Mark", nil];
+```
+
+Notice the inclusion of `nil` at the end of the object list; `nil` is a notation that means "no-object" or "nothing". The minding-bending irony of `nil` is that it is actually an object itself, but one that means "not-an-object". It's kind of like a sign that reads, "Post No Signs". Hilarious.
+
+It's significant here because `nil` is how a collection understands its end. The final object in every collection is always `nil`. Since `nil` is the tag for the end of a collection, if you were to successfully put `nil` into a collection a second time, your application would very likely crash at run time because your collection would think it's shorter than it's supposed to be. For this reason, there's a lot of effort in writing Objective-C that gets put into 
 
 
-##What is a collection?
-
-A collection is simply a group of objects. A collection could be all of one type (i.e. a series of `NSString` objects) or of mixed types.
+### Creating Empty Arrays
 
 
 
-##Basics of `NSArray`
-
-`NSArray` is the most common collection object, and abides by certain basic rules. 
-
-These are:
-
-1) We begin counting objects in an `NSArray` from 0. In other words, the first object in an array is Object 0.
-2) `NSArray` objects are ordered and will maintain the order of the objects they contain.
-3) `NSArray` objects are immutable; they may not be modified after being created. We'll go over how to make mutable arrays later.
-4) Given that `NSArray` objects can contain mixed data types, it is generally a good idea to make sure to only put one type of object in an array. Otherwise, you'd need to make sure that everything that comes out of an array is the type you expect, which is just a pain.
 
 
-
-##Creating an `NSArray`
+====Mark====
 
 There are a number of ways to create a new `NSArray`, some of which instantiate the array with values; others which allow you to specify the values afterward.
 
