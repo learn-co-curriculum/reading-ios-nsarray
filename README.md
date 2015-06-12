@@ -78,7 +78,7 @@ NSArray *instructors = [[NSArray alloc]initWithObjects:@"Joe", @"Tim", @"Jim", @
 
 ```objc
 NSArray *instructors = [NSArray alloc];
-[instructors initWithObjects:@"Joe", @"Tim", @"Jim", @"Tom", @"Mark", nil];
+instructors = [instructors initWithObjects:@"Joe", @"Tim", @"Jim", @"Tom", @"Mark", nil];
 ```
 You may come across any of these other examples of creating an array, and you should that you can just use `@[]` as an equivalent.
 
@@ -254,22 +254,18 @@ This will print:
     Tim,
     Jim,
     Tom,
-    Joe,
     Mark
 )
 ```
-Great! We're back to five instructor's and Mark is happy that his name is spelled correctly. 
+Uh oh! Joe's name is gone from the array completely. It looks like the `removeObject:` method got rid of both occurences of Joe's name in the array.
 
-Hm, did you notice, though, that it was the first copy of Joe's name that got removed and not the second?
+### The `removeObjectAtIndex:` And `insertObject:atIndex:` Methods
 
-### The `removeObjectAtIndex:` And `addObject:atIndex:` Methods
-
-There's another pair of methods on `NSMutableArray` which allow us to remove or add an object at a specific spot in the mutable array. Let's use these to move Joe's name back to the front of the list:
+There's another pair of methods on `NSMutableArray` which allow us to remove or add an object at a specific spot in the mutable array. We could have used the `removeObjectAtIndex:` method above to remove *just* the second occurence of Joe's name. Let's use the `insertObject:atIndex:` method to put Joe's name back at the front of the list:
 
 ```objc
-NSString *joe = mInstructors[3];
+NSString *joe = @"Joe";
 
-[mInstructors removeObjectAtIndex:3];
 [mInstructors addObject:joe atIndex:0];
 
 NSLog(@"%@", mInstructors);
