@@ -3,15 +3,26 @@
 ## Objectives
 
 1. Understand the classification of collection types.
-2. Learn how to create an `NSArray` with literal syntax (`@[]`).
+2. Create an `NSArray` with literal syntax (`@[]`).
 3. Recognize method initializers and learn the role of `nil`.
-4. Learn how to create an `NSMutableArray` and how its type differs from `NSArray`.
-5. Learn how to query an array with methods and the array "sugar".
-6. Learn how to add and remove objects to and from an `NSMutableArray` with its own methods.
+4. Create an `NSMutableArray` and how its type differs from `NSArray`.
+5. Query an array with methods and the array "sugar", a.k.a. "subscripting".
+6. Add and remove objects to and from an `NSMutableArray` with its own methods.
+7. Replace an object in a mutable array by using subscripting.
 
 ## Introduction To Collection Types
 
-Collection types are objects which hold a group of other objects called "a collection". Collections can hold all of a single type (such as string objects) or contain a group of various types (called mixed types), and may or may not track the order of the objects for which they're responsible. 
+### The Usefulness of Collections
+
+Holding information in variables is important, but what happens when we want to hold a lot inidividual pieces of information at once? We *could* create a variable for each piece and this would work okay for small groups of information. But what if, for example, we want to hold all 41,733 United States postal codes at once?
+
+It's in this sort of scenario in which holding the postal codes in a collection becomes not only advantageous, but downright necessary. Our examples in this reading, however, will suffice to show a collection of five objects.
+
+### What Is A Collection?
+
+Collection types are objects which hold a group of other objects called "a collection". A collection can hold all of a single type (such as string objects) or contain a group of various types (called mixed types), and may or may not track the order of the objects for which they're responsible. 
+
+**Top Tip:** *It is highly unusual to put multiple types of objects in the same collection. If you find yourself doing so, think twice.*
 
 Since collections are objects themselves, a collection can contain other collections—this is how a matrix is created, by nesting a series of arrays within a parent array. 
 
@@ -26,23 +37,32 @@ NSArray
 NSDictionary
 NSSet
 ```
-This reading will cover the basics of the `NSArray` class and its mutable type `NSMutableArray`.
+This reading will cover the basics of the array collection type.
 
 ## Introduction To `NSArray`
 
 The workhorse of collection types is the array. In Objective-C, arrays take the form of the `NSArray`class. 
 
-**Note:** *The* `array` *class is inherited from C and called 'C-array'. They are not objects and will not behave how you expect, so avoid using them.*
+An `NSArray` represents an ***ordered collection*** of objects. This distinction of being an **ordered** collection is what makes `NSArray` the go-to class that it is. What this means is that in addition to the objects themselves, the sequence in which they are arranged will also be preserved.
 
-An `NSArray` will manage an ***ordered collection*** of objects. This distinction of managing an **ordered** collection is what makes `NSArray` the go-to class that it is. What this means is that whatever sequence the objects of an `NSArray` are defined in, that same sequence will be preserved for the life of the `NSArray`, or until it is overwritten entirely.
-
-**Advanced:** *The mutable array type* `NSMutableArray` *is capable of altering itself without being directly overwritten. It does, however, still maintain the order of the objects in its managed collection.*
+**Advanced:** *As we'll see shortly, the elements of the mutable array type* `NSMutableArray` *can be modified directly. However, it still maintains the order of its objects.*
 
 ## Creating An `NSArray`
 
+As mentioned above, if we want to hold the names of our five instructors as string objects, we have to declare and define each of them individually:
+
+```objc
+NSString *joe = @"Joe";
+NSString *tim = @"Tim";
+NSString *jim = @"Jim";
+NSString *tom = @"Tom";
+NSString *mark = @"Mark";
+```
+This quickly becomes a lot of work. Instead, we can initialize all of these string objects within the contents of a collection to hold and access them as a group.
+
 #### The Literal Syntax
 
-You've seen literal syntax used for other object types in previous examples. Being the commonly used type that it is, `NSArray` has a literal syntax. It is `@[]`, with the contents of the array to be created listed inside the square brackets (`[``]`).
+You've seen the literal syntax used for other object types in previous examples. Being the commonly used type that it is, `NSArray` has a literal syntax, too. It is `@[]`, with the contents of the array to be created listed inside the square brackets (`[``]`). The literal syntax is the most readable and most concise way to create an `NSArray` in your code, and is what you should use in almost all cases of creating an `NSArray`.
 
 ```objc
 NSArray *instructors = @[ @"Joe", @"Tim", @"Jim", @"Tom", @"Mark" ];
@@ -60,11 +80,11 @@ This will print:
     Mark
 )
 ```
-The description of each object in the array's collection is printed on its own line. You'll notice too that the printout has the contents in the exact same order as the collection we initialized in the code.
+The description of each object in the array's collection is printed on its own line. You'll notice, too, that the printout has the contents in the exact same order as when we initialized the collection.
 
 #### Initializer Methods
 
-The literal syntax for `NSArray` was actually only introduced in iOS 6. Since it's relatively new, it's important to recognize the long-form syntax that the literal is calling on your behalf. This way you can recognize array initializers in examples or files that are than older 2012.
+The literal syntax for `NSArray` was actually only introduced in iOS 6. Since it's relatively new, it's important to recognize the long-form syntax that the literal is calling on your behalf. This way you can recognize array initializers in examples you might find on Stack Overflow, or at your future workplace in application files that are than older 2012.
 
 ```objc
 NSArray *instructors = [NSArray arrayWithObjects:@"Joe", @"Tim", @"Jim", @"Tom", @"Mark", nil];
@@ -72,99 +92,105 @@ NSArray *instructors = [NSArray arrayWithObjects:@"Joe", @"Tim", @"Jim", @"Tom",
 *This* `+arrayWithObjects:` *class method actually just calls the* `+alloc` `-initWithObjects` *initializer methods together:*
 
 ```objc
-NSArray *instructors = [[NSArray alloc]initWithObjects:@"Joe", @"Tim", @"Jim", @"Tom", @"Mark", nil];
+NSArray *instructors = [[NSArray alloc] initWithObjects:@"Joe", @"Tim", @"Jim", @"Tom", @"Mark", nil];
 ```
-*Before method nesting was supported, they originally had to appear on separate lines:*
-
-```objc
-NSArray *instructors = [NSArray alloc];
-instructors = [instructors initWithObjects:@"Joe", @"Tim", @"Jim", @"Tom", @"Mark", nil];
-```
-You may come across any of these other examples of creating an array, and you should that you can just use `@[]` as an equivalent.
-
+You may come across either of these other examples of creating an array, and you should know that you can just use `@[]` as an equivalent.
 
 #### The Role Of `nil`
 
-Notice the inclusion of `nil` at the end of the object list; `nil` is a notation that means "no-object" or "nothing". The minding-bending irony of `nil` is that it is actually an object itself, but one that means "not-an-object". It's kind of like a sign that reads, "Post No Signs". Hilarious. And annoying.
+Notice the inclusion of `nil` at the end of the object list; `nil` is a notation that means "no-object" or "nothing". It's significant here because `nil` is how a collection understands its end point. In this case, `nil` acts as the "sentinel value"— a special marker that tells the array when to stop looking for new objects. 
 
-It's significant here because `nil` is how a collection understands its end point. The final object in every collection is always `nil`. Since `nil` is the tag for the end of a collection, if you were to successfully put `nil` into a collection at some earlier point, your application would very likely crash at run time because your collection would think it's shorter than it's supposed to be. For this reason, there's a lot of effort in writing Objective-C that gets put into avoiding defining variables to `nil` whenever possible.
+**Note:** *Using the array literal syntax handles the* `nil` *sentinel for you, which is one of the literal syntax's advantages.*
 
+#### Creating Empty Arrays
 
-### Creating Empty Arrays
-
-In order to avoid defining an array to `nil`, the array literal can be used to create an empty array.
+In order to avoid defining an array to `nil`, the array literal alone can be used to create an empty array.
 
 ```objc
 NSArray *empty = @[];
 ```
-There are also some antiquated methods on `NSArray` which you might see:
-
-```objc
-NSArray *empty = [NSArray new];
-```
-
-```objc
-NSArray *empty = [NSArray array];
-```
-
-```objc
-NSArray *empty = [[NSArray alloc]init];
-```
 **Advanced:** *The array literal is a shorthand for the* `+alloc` `-initWithObjects:` *method pair. The Objective-C language is written to interpret* `@[]` *as calling these methods.*
 
-## The Mutable Type
+## The Mutable Array
 
-The mutable type of `NSArray` is `NSMutableArray`. This is apparent from the class names. Being a mutable type means that the object can alter itself without being directly overwritten. For `NSMutableArray`, this means it has additional methods that allow it to add or remove objects from itself.
+So far we've only been discussing static, or immutable, arrays—that is, arrays whose elements are known at the time of creation and do not change. But what if we want to change the contents of an array after we've defined it? 
+
+Enter `NSMutableArray`, the mutable counterpart to `NSArray`. The "mutable" nature means that the object can altered after its definition. For `NSMutableArray`, this means it has additional methods that allow it to add or remove objects from itself.
 
 ### Creating An `NSMutableArray`
 
-Unlike `NSArray`, the mutable type `NSMutableArray` doesn't have a literal syntax. This means `NSMutableArray` can only be initialized with methods. Remember the `+alloc` `-initWithObjects:` method on `NSArray`? That *does* also work on `NSMutableArray`:
-
-```objc
-NSMutableArray *mInstructors = [[NSMutableArray alloc]initWithObjects:@"Joe", @"Tim", @"Jim", @"Tom", @"Mark", nil];
-```
-This gives us an equivalent array of instructor names, but as a mutable type.
-
-#### Incorporating The `NSArray` Literal Syntax
-
-What *is* handy about the `NSArray` literal syntax, however, is that we can use it within certain initializers on `NSMutableArray`, specifically `arrayWithArray:`.
+Unlike `NSArray`, the mutable type `NSMutableArray` doesn't have a literal syntax. This means `NSMutableArray` can only be initialized with methods. The easiest way is perhaps the `mutableCopy` method that can be called upon an `NSArray`:
 
 ```objc
 NSArray *instructors = @[ @"Joe", @"Tim", @"Jim", @"Tom", @"Mark" ];
-
-NSMutableArray *mInstructors = [NSMutableArray arrayWithArray:instructors];
+NSMutableArray *mInstructors = [instructors mutableCopy];
 ```
-We can also do this in-line with the `NSArray` literal:
+This `mutableCopy` method returns a mutable array with identical contents.
+
+We can also do this on a single line by passing an `NSArray` literal in the `arrayWithArray:` method on `NSMutableArray`:
 
 ```objc
-NSMutableArray *mInstructors = [NSMutableArray arrayWithArray: @[ @"Joe", @"Tim", @"Jim", @"Tom", @"Mark" ] ]; 
+NSMutableArray *mInstructors = 
+    [NSMutableArray arrayWithArray:@[ @"Joe", @"Tim", @"Jim", @"Tom", @"Mark" ] ]; 
 ```
 
 #### Creating An Empty `NSMutableArray`
 
-In similar fashion, if we want to create an `NSMutableArray` without any contents, but with the intention of adding contents to it later, we *must* intitialize it to an empty `NSMutableArray`. This is done using the `+alloc` `-init` method pair:
+In similar fashion, if we want to create an `NSMutableArray` without any contents, but with the intention of adding contents to it later, we *must* intitialize it to an empty `NSMutableArray`. This is done most easily with the `array` method:
 
 ```objc
-NSMutableArray *mEmpty = [[NSMutableArray alloc]init];
+NSMutableArray *mEmpty = [NSMutableArray array];
 ```
-Or the `+new` method:
+
+#### Always Initialize Mutable Arrays
+
+Forgetting to initialize a mutable array, particularly when declared as a property (we'll explain properties in a later topic), is a very common oversight in programming Objective-C and can be a very diffucult bug to diagnose. In this case, the mutable array can be the recipient of method calls but won't actually retain any of the values submitted to it, so attempting to access the contents of the array later will return `nil`.
 
 ```objc
-NSMutableArray *mEmpty = [NSMutableArray new];
+NSMutableArray *mInstructors;
+
+[mInstructors addObjectsFromArray:@[ @"Joe", @"Tim", @"Jim", @"Tom", @"Mark" ] ];
+
+NSLog(@"%@", mInstructors);
 ```
-Forgetting to initialize a mutable array is a very common oversight in programming Objective-C. *Declaring it is not enough!* All declared-but-undefined variables will get initialized to `nil` by default. Sending a method call to `nil` will cause your application to break. So *always* initialize to an empty array if you have no content to put into it yet!
+This will print: `(null)`.
 
-## Reading Arrays
+Oops.
 
-The purpose of creating arrays is to store information that you need to access later or from somewhere else in your application. 
+## Reading Arrays 
 
-### Indexing An Array
+The whole point of storing information in a collection is to access it later. The most common way to access the contents of an array is by index.
 
-The most common method for reading the contents of an array—either mutable or static—is the `objectAtIndex:` method. Just like the characters in a string have an index starting with `0` (zero), the objects in an array can be accessed by their index, which also starts with `0` (zero).
+#### Syntactic Sugar: Subscripting
 
-**Advanced:** *Indexing works on the letters of a string because strings are actually arrays which specifically hold a sequence of characters.*
+There's a useful shorthand syntax (nicknamed "sugar" or "subscripting") which works with both `NSArray` and `NSMutableArray` collections. Subscripting returns the object at the submitted index number of the array being accessed. It is written out as an integer (or integer variable) within square brackets `[]` following the array's name. Just like the characters in a string which begin at index `0` (zero), the objects in an array also begin at index `0` (zero).
 
 In our array of instructor names, for example, "Joe" is the first object at index `0` (zero), while "Jim" is the third object at index `2`.
+
+```objc
+NSArray *instructors =  @[ @"Joe", @"Tim", @"Jim", @"Tom", @"Mark" ];
+
+NSString *joe = instructors[0];
+NSString *jim = instructors[2];
+
+NSLog(@"%@, %@", joe, jim);
+```
+This will print: `Joe, Jim`.
+
+Subscripting can also be used in-line, such as for the `NSLog()`:
+
+```objc
+NSArray *instructors = @[ @"Joe", @"Tim", @"Jim", @"Tom", @"Mark" ];
+
+NSLog(@"%@, %@", instructors[0], instructors[2]);
+```
+This will also print: `Joe, Jim`.
+
+Sugars like this one are useful for quickly reducing verbosity and line-count, and generally improving the readability of your code. Sweetness.
+
+#### The `objectAtIndex:` Method
+
+Using the subscript syntax in this manner is actually just calling the `objectAtIndex:` method for the submitted index number.
 
 ```objc
 NSArray *instructors = @[ @"Joe", @"Tim", @"Jim", @"Tom", @"Mark" ];
@@ -178,42 +204,15 @@ This will print: `Joe, Jim`.
 
 **Note:** *The* `objectAtIndex:` *method also works on any* `NSMutableArray` *collection.*
 
-### Syntactic Sugar
+## Methods Of Mutability
 
-There's actually a shortand syntax (nicknamed "sugar") which calls the `objectAtIndex:` method and works with *both* `NSArray` and `NSMutableArray` collection types. Like the array literal syntax `@[]`, the array sugar uses the square brackets `[` `]`, but instead of the `@` ("at") symbol, we begin with the name of the array object we wish to index *and then* place the desired index number within the square brackets:
+The mutable type `NSMutableArray` brings some great additional functionality to ordered collections. According to its title, it is just that—mutable. Unilke its static counterpart,  `NSMutableArray` can alter itself by adding, removing, or reordering its contents after being defined.
 
-```objc
-NSArray *instructors =  @[ @"Joe", @"Tim", @"Jim", @"Tom", @"Mark" ];
-
-NSString *joe = instructors[0];
-NSString *jim = instructors[2];
-
-NSLog(@"%@, %@", joe, jim);
-```
-This will also print: `Joe, Jim`.
-
-The array sugar can also be used in-line, such as for the `NSLog()`:
-
-```objc
-NSArray *instructors = @[ @"Joe", @"Tim", @"Jim", @"Tom", @"Mark" ];
-
-NSLog(@"%@, %@", instructors[0], instructors[2]);
-```
-This will also print: `Joe, Jim`.
-
-Sugars like this one are useful for quickly reducing verbosity and line-count, and generally improving the readability of your code. Sweetness.
-
-## Utilizing The Mutable Type
-
-The mutable type `NSMutableArray` brings some great additional functionality to ordered collections. According to its title, it is just that—mutable. An `NSMutableArray` can alter itself by adding, removing, or reordering its contents without having to directly overwrite itself.
-
-**Advanced:** *Mutable types actually do overwrite their contents, but they handle it internally giving the appearance of editing themselves. Under the hood, adding or removing an object to or from a mutable array is really just a macro for writing a new array with the speficied object inserted at or removed from the specified index, and then changing its pointer to reference the new array.*
-
-### The `addObject:` Method
+#### The `addObject:` Method
 
 This method will add the submitted object to the end of the mutable array. Since it is a `void`-type method, there is no return to capture.
 
-In the example below, our array of instructors was accidentally created with Mark's name spelled incorrectly and with Joe's name in it twice. Oops! Let's start fixing it by adding Mark's name correctly:
+In the example below, our array of instructors was accidentally created with Mark's name spelled incorrectly and with Joe's name included twice. Oops! Let's start fixing it by adding Mark's name correctly:
 
 ```objc
 NSMutableArray *mInstructors = [NSMutableArray arrayWithArray:@[ @"Joe", @"Tim", @"Mack", @"Jim", @"Tom", @"Joe" ];
@@ -237,9 +236,9 @@ This will print:
 ```
 Step one accomplished!
 
-### The `removeObject:` Method
+#### The `removeObject:` Method
 
-And we can also remove a specified object from the mutable array. Since this method scans the array from the beginning, it will remove *only* the *first matching object* in the array. We can use this method to remove both the offensive spelling of Mark's name and the duplicate of Joe's name:
+And we can also remove a specified object from the mutable array. We can use this method to remove both the offensive spelling of Mark's name and the duplicate of Joe's name:
 
 ```objc
 [mInstructors removeObject:@"Mack"];
@@ -257,16 +256,16 @@ This will print:
     Mark
 )
 ```
-Uh oh! Joe's name is gone from the array completely. It looks like the `removeObject:` method got rid of both occurences of Joe's name in the array.
+Uh oh! Joe's name is gone from the array completely. It looks like the `removeObject:` method got rid of both occurences of Joe's name in the array. Calling the `removeObject:` method will remove every object from the array that matches the submitted argument. 
 
-### The `removeObjectAtIndex:` And `insertObject:atIndex:` Methods
+#### The `removeObjectAtIndex:` And `insertObject:atIndex:` Methods
 
 There's another pair of methods on `NSMutableArray` which allow us to remove or add an object at a specific spot in the mutable array. We could have used the `removeObjectAtIndex:` method above to remove *just* the second occurence of Joe's name. Let's use the `insertObject:atIndex:` method to put Joe's name back at the front of the list:
 
 ```objc
 NSString *joe = @"Joe";
 
-[mInstructors addObject:joe atIndex:0];
+[mInstructors insertObject:joe atIndex:0];
 
 NSLog(@"%@", mInstructors);
 ```
@@ -283,6 +282,36 @@ This will print:
 ```
 Just what we're used to!
 
-**Note:** *The order in which changes are made to an array by index can matter. If we had inserted* `joe` *before removing Joe's name from the array, it would have been Tom's name that would have been at index* `3` *and subsequently removed.*
+#### Subcript Setting And `replaceObjectAtIndex:withObject:`
+
+An additional ability of `NSMutableArray`s allow them to utilize the array subscript (`[]`) to replace an object at the submitted index. This looks just like the reverse of using the subscript syntax to retrieve the contents of the array:
+
+```objc
+NSMutableArray *mInstructors = 
+     [NSMutableArray arrayWithArray:@[ @"Joe", @"Tim", @"Jim", @"Tom", @"Mike" ] ];
+
+mInstructors[4] = @"Mark";
+
+NSLog(@"%@", mInstructors);
+```
+This will print:
+
+```
+(
+    Joe,
+    Tim,
+    Jim,
+    Tom,
+    Mark
+)
+```
+It is equivalent to calling `NSMutableArray`'s `replaceObjectAtIndex:withObject:` method and will *only* work with mutable arrays:
+
+```objc
+[mIntructors replaceObjectAtIndex:4 withObject:@"Mark"];
+```
+However, neither the subscript nor this method call can be used to insert a new object into the array—it can only replace an object at an existing index. Your application will crash with an `index beyond bounds` error if you're not careful.
+
+## Conclusion
 
 These are just a few of the additional methods on `NSMutableArray`, but they're the ones you'll interact with the most. When you're ready, refer to the documentation on `NSArray` and `NSMutableArray` to learn more about what these classes can do.
