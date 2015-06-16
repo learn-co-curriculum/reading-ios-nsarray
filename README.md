@@ -16,7 +16,7 @@
 
 Holding information in variables is important, but what happens when we want to hold a lot inidividual pieces of information at once? We *could* create a variable for each piece and this would work okay for small groups of information. But what if, for example, we want to hold all 41,733 United States postal codes at once?
 
-It's in this sort of scenario in which holding the postal codes in a collection becomes not only advantageous, but downright necessary. Our examples in this reading, however, will suffice to show a collection of five objects.
+It's in this sort of scenario that holding the information in a collection becomes not only advantageous, but downright necessary. Our examples in this reading, however, will suffice to show a collection of only five objects.
 
 ### What Is A Collection?
 
@@ -98,9 +98,9 @@ You may come across either of these other examples of creating an array, and you
 
 #### The Role Of `nil`
 
-Notice the inclusion of `nil` at the end of the object list; `nil` is a notation that means "no-object" or "nothing". It's significant here because `nil` is how a collection understands its end point. In this case, `nil` acts as the "sentinel value"— a special marker that tells the array when to stop looking for new objects. 
+Notice the inclusion of `nil` at the end of the object list; `nil` is a notation that means "no-object" or "nothing". It's significant here because `nil` is acts as the "sentinel value" which tells the `-initWithObjects:` method when to stop looking for new objects. 
 
-**Note:** *Using the array literal syntax handles the* `nil` *sentinel for you, which is one of the literal syntax's advantages.*
+**Note:** *One of the advantages of using the array literal syntax is that it doesn't require a sentinel value to mark the end of the objects list.*
 
 #### Creating Empty Arrays
 
@@ -206,7 +206,7 @@ This will print: `Joe, Jim`.
 
 ## Methods Of Mutability
 
-The mutable type `NSMutableArray` brings some great additional functionality to ordered collections. According to its title, it is just that—mutable. Unilke its static counterpart,  `NSMutableArray` can alter itself by adding, removing, or reordering its contents after being defined.
+The mutable type `NSMutableArray` brings some great additional functionality to ordered collections. According to its title, it is just that—mutable. Unlike its static counterpart,  `NSMutableArray` can alter itself by adding, removing, or reordering its contents after being defined.
 
 #### The `addObject:` Method
 
@@ -256,11 +256,11 @@ This will print:
     Mark
 )
 ```
-Uh oh! Joe's name is gone from the array completely. It looks like the `removeObject:` method got rid of both occurences of Joe's name in the array. Calling the `removeObject:` method will remove every object from the array that matches the submitted argument. 
+Uh oh! Joe's name is gone from the array completely. It looks like the `removeObject:` method got rid of both occurrences of Joe's name in the array. Calling the `removeObject:` method will remove every object from the array that matches the submitted argument. 
 
 #### The `removeObjectAtIndex:` And `insertObject:atIndex:` Methods
 
-There's another pair of methods on `NSMutableArray` which allow us to remove or add an object at a specific spot in the mutable array. We could have used the `removeObjectAtIndex:` method above to remove *just* the second occurence of Joe's name. Let's use the `insertObject:atIndex:` method to put Joe's name back at the front of the list:
+There's another pair of methods on `NSMutableArray` which allow us to remove or add an object at a specific spot in the mutable array. We could have used the `removeObjectAtIndex:` method above to remove *just* the second occurrence of Joe's name. Let's use the `insertObject:atIndex:` method to put Joe's name back at the front of the list:
 
 ```objc
 NSString *joe = @"Joe";
