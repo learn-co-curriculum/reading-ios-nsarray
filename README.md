@@ -14,7 +14,7 @@
 
 ### The Usefulness of Collections
 
-Holding information in variables is important, but what happens when we want to hold a lot inidividual pieces of information at once? We *could* create a variable for each piece and this would work okay for small groups of information. But what if, for example, we want to hold all 41,733 United States postal codes at once?
+Holding information in variables is important, but what happens when we want to hold a lot of individual pieces of information all at once? We *could* create a variable for each piece and this would work okay for small groups of information. But what if, for example, we want to hold all 41,733 United States postal codes at once?
 
 It's in this sort of scenario that holding the information in a collection becomes not only advantageous, but downright necessary. Our examples in this reading, however, will suffice to show a collection of only five objects.
 
@@ -115,7 +115,7 @@ NSArray *empty = @[];
 
 So far we've only been discussing static, or immutable, arrays—that is, arrays whose elements are known at the time of creation and do not change. But what if we want to change the contents of an array after we've defined it? 
 
-Enter `NSMutableArray`, the mutable counterpart to `NSArray`. The "mutable" nature means that the object can altered after its definition. For `NSMutableArray`, this means it has additional methods that allow it to add or remove objects from itself.
+Enter `NSMutableArray`, the mutable counterpart to `NSArray`. The "mutable" nature means that the object can be altered after its definition. For `NSMutableArray`, this means it has additional methods that allow it to add or remove objects from itself.
 
 ### Creating An `NSMutableArray`
 
@@ -153,7 +153,7 @@ NSMutableArray *mInstructors;
 
 NSLog(@"%@", mInstructors);
 ```
-This will print: `(null)`.
+This will print: `(null)`, which is how `nil` is expressed by LLDB in the debug console.
 
 Oops.
 
