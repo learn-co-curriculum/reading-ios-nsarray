@@ -136,15 +136,30 @@ NSMutableArray *mInstructors =
 
 #### Creating An Empty `NSMutableArray`
 
-In similar fashion, if we want to create an `NSMutableArray` without any contents, but with the intention of adding contents to it later, we *must* intitialize it to an empty `NSMutableArray`. This is done most easily with the `array` method:
+In similar fashion, if we want to create an `NSMutableArray` without any contents, but with the intention of adding contents to it later, we *must* initialize it to an empty `NSMutableArray`. The most universal syntax that you'll see for this is the `+alloc` and `-init` method pair:
+
+```objc
+NSMutableArray *mEmpty = [[NSMutableArray alloc] init];
+```
+We'll discuss these methods in more detail later; for now, know that they're necessary for creating variables. The literal syntaxes that you've learned previously call this pair of methods implicitly. However, `NSMutableArray` does not have it's own literal syntax, so mutable arrays must be created using methods. 
+
+Some other creation methods that you might see used with `NSMutableArray` in examples online are the `new` or `array` methods:
+
+```objc
+NSMutableArray *mEmpty = [NSMutableArray new];
+```
 
 ```objc
 NSMutableArray *mEmpty = [NSMutableArray array];
 ```
 
+These implicitly call the `+alloc` and `-init` methods, they're just written in one method call instead of two.
+
+**Top-tip:** *While the* `new` *and* `array` *methods are entirely valid, we strongly suggest getting into the habit of writing out the* `alloc` *and* `init` *method pair when creating new variables that don't have a literal syntax. It's easy to convert the base* `init` *method to a specific one such as* `initWithObjects:`*, making for more-easily maintainable code.*
+
 #### Always Initialize Mutable Arrays
 
-Forgetting to initialize a mutable array, particularly when declared as a property (we'll explain properties in a later topic), is a very common oversight in programming Objective-C and can be a very diffucult bug to diagnose. In this case, the mutable array can be the recipient of method calls but won't actually retain any of the values submitted to it, so attempting to access the contents of the array later will return `nil`.
+Forgetting to initialize a mutable array, particularly when declared as a property (we'll explain properties in a later topic), is a very common oversight in programming Objective-C and can be a very difficult bug to diagnose. In this case, the mutable array can be the recipient of method calls but won't actually retain any of the values submitted to it, so attempting to access the contents of the array later will return `nil`.
 
 ```objc
 NSMutableArray *mInstructors;
@@ -282,7 +297,7 @@ This will print:
 ```
 Just what we're used to!
 
-#### Subcript Setting And `replaceObjectAtIndex:withObject:`
+#### Subscript Setting And `replaceObjectAtIndex:withObject:`
 
 An additional ability of `NSMutableArray`s allow them to utilize the array subscript (`[]`) to replace an object at the submitted index. This looks just like the reverse of using the subscript syntax to retrieve the contents of the array:
 
@@ -308,7 +323,7 @@ This will print:
 It is equivalent to calling `NSMutableArray`'s `replaceObjectAtIndex:withObject:` method and will *only* work with mutable arrays:
 
 ```objc
-[mIntructors replaceObjectAtIndex:4 withObject:@"Mark"];
+[mInstructors replaceObjectAtIndex:4 withObject:@"Mark"];
 ```
 However, neither the subscript nor this method call can be used to insert a new object into the array—it can only replace an object at an existing index. Your application will crash with an `index beyond bounds` error if you're not careful.
 
