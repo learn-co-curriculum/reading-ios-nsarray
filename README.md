@@ -330,10 +330,11 @@ However, neither the subscript nor this method call can be used to insert a new 
 
 #### The `count` Method
 
-Sometimes you will be curious how many elements are contained in an array. You can find out the number of elements currentely in an array by calling the `count` method on it. The most common use case of this is limiting the number of iterations of a  `for` loop. Let's say we have a loop that `NSLog()`s a greeting to each student whose name is held in an array:
+Sometimes you will need to know how many elements are contained in an array. You can get this information by calling the `count` method on the array in question. The most common use case of this is when limiting the number of iterations that a  `for` loop should run over the array. Let's say we have a loop that `NSLog()`s a greeting to each student whose name is held in an array:
 
 ```objc
 NSArray *students = @[ @"Joe", @"Mark" ];
+
 for (NSUInteger i=0, i < 2, i++) {
     NSLog(@"Welcome, %@!", students[i] );
 }
@@ -345,13 +346,13 @@ But what happens when we add a new student `@"Tom"` to the array?
 NSArray *students = @[ @"Joe", @"Mark", @"Tom"];
 ```
 
-We would have to manually change our `for` loop's maximum to look like this:
+We would have to manually change our `for` loop's conditional to look like this:
 
 ```objc
 for (NSUInteger i = 0; i < 3; i++) {...}
 ```
 
-How did we know it needed to be `3` this time and not `2`? Well, because we are manually tracking the number of elements in the array! However, we can get our `for` loop to count the number of elements in the array for us *at run time*. This means that our `for` loop could handle an array of *any* length by having it call this handy `count` method on the `students` array and using its result to limit the counter that governs our `for` loop. Implementing the `count` method in the `for` loop's conditional statement would like this:
+How did we know it needed to be `3` this time and not `2`? Well, because we manually counted the number of elements in the array! However, we can get our `for` loop to count the number of elements in the array for us *at run time*. This means that our `for` loop can handle a `students` array of *any* length just by having it call this handy `count` method and using its result to limit the `for` loop's counter. Implementing the `count` method in our `for` loop's conditional statement would like this:
 
 ```objc
 for (NSUInteger i = 0; i < [students count]; i++) {...}
