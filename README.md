@@ -9,6 +9,7 @@
 5. Query an array with methods and the array "sugar", a.k.a. "subscripting".
 6. Add and remove objects to and from an `NSMutableArray` with its own methods.
 7. Replace an object in a mutable array by using subscripting.
+8. Use the `count` method when iterating over an array with a `for` loop.
 
 ## Introduction To Collection Types
 
@@ -329,27 +330,52 @@ However, neither the subscript nor this method call can be used to insert a new 
 
 #### The `count` Method
 
-Sometimes, you will be curious how many elements are in an `NSArray`. You can get the number of elements with the `count` method. The most common use case of this is in `for` loops. Let's say we had this loop that `NSLog`s all of the elements:
+Sometimes you will be curious how many elements are contained in an array. You can find out the number of elements currentely in an array by calling the `count` method on it. The most common use case of this is limiting the number of iterations of a  `for` loop. Let's say we have a loop that `NSLog()`s a greeting to each student whose name is held in an array:
 
 ```objc
-NSArray *students = @[@"Joe",@"Mark"];
-for (NSUInteger i=0,i<2,i++) {
-    NSLog(@"Welcome %@!",students[i]);
+NSArray *students = @[ @"Joe", @"Mark" ];
+for (NSUInteger i=0, i < 2, i++) {
+    NSLog(@"Welcome, %@!", students[i] );
 }
 ```
 
-What happens when we add a new student? We have to change our `for` loop to look like this:
+But what happens when we add a new student `@"Tom"` to the array? 
 
-```objc
-for (NSUInteger i=0; i < 3;i++)
+```
+NSArray *students = @[ @"Joe", @"Mark", @"Tom"];
 ```
 
-How did we know it needed to be 3 this time, not 2? That is the number of elements in the array! So we can now write our `for` loop to handle any size of `NSArray` by writing the `for` statement like this:
+We would have to manually change our `for` loop's maximum to look like this:
 
 ```objc
-for (NSUInteger i=0; i < [students count]; i++)
+for (NSUInteger i = 0; i < 3; i++) {...}
 ```
+
+How did we know it needed to be `3` this time and not `2`? Well, because we are manually tracking the number of elements in the array! However, we can get our `for` loop to count the number of elements in the array for us *at run time*. This means that our `for` loop could handle an array of *any* length by having it call this handy `count` method on the `students` array and using its result to limit the counter that governs our `for` loop. Implementing the `count` method in the `for` loop's conditional statement would like this:
+
+```objc
+for (NSUInteger i = 0; i < [students count]; i++) {...}
+```
+
+Using the `count` method also protects our loop from iterating *too many* times over an array, which would cause the application to crash with an `index ? beyond bounds [range]` error:
+
+```objc
+// bad example
+
+NSArray *students = @[ @"Joe", @"Mark"];
+for (NSUInteger i = 0; i < 3; i++) {...}
+```
+This will cause a crash the prints:
+
+```
+Welcome, Joe!
+Welcome, Mark!
+*** Terminating app due to uncaught exception 'NSRangeException', reason: '*** -[__NSArrayI objectAtIndex:]: index 2 beyond bounds [0 .. 1]'
+*** First throw call stack:
+```
+
+Yikes! In order to avoid this problem, it's a best practice of "defensive programming" to *always* use the `count` method when iterating over an array.
 
 ## Conclusion
 
-These are just a few of the additional methods on `NSMutableArray`, but they're the ones you'll interact with the most. When you're ready, refer to the documentation on `NSArray` and `NSMutableArray` to learn more about what these classes can do.
+These are just a few of the additional methods on `NSMutableArray`, but they're the ones you'll interact with the most. When you're ready, refer to the documentation about `NSArray` and `NSMutableArray` to learn more about what arrays can do.
