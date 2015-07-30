@@ -364,7 +364,9 @@ Using the `count` method also protects our loop from iterating *too many* times 
 // bad example
 
 NSArray *students = @[ @"Joe", @"Mark"];
-for (NSUInteger i = 0; i < 3; i++) {...}
+for (NSUInteger i = 0; i < 3; i++) {
+    NSLog(@"Welcome, %@!", students[i] );
+}
 ```
 This will cause a crash the prints:
 
