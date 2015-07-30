@@ -327,6 +327,29 @@ It is equivalent to calling `NSMutableArray`'s `replaceObjectAtIndex:withObject:
 ```
 However, neither the subscript nor this method call can be used to insert a new object into the array—it can only replace an object at an existing index. Your application will crash with an `index beyond bounds` error if you're not careful.
 
+#### The `count` Method
+
+Sometimes, you will be curious how many elements are in an `NSArray`. You can get the number of elements with the `count` method. The most common use case of this is in `for` loops. Let's say we had this loop that `NSLog`s all of the elements:
+
+```objc
+NSArray *students = @[@"Joe",@"Mark"];
+for (NSUInteger i=0,i<2,i++) {
+    NSLog(@"Welcome %@!",students[i]);
+}
+```
+
+What happens when we add a new student? We have to change our `for` loop to look like this:
+
+```objc
+for (NSUInteger i=0; i < 3;i++)
+```
+
+How did we know it needed to be 3 this time, not 2? That is the number of elements in the array! So we can now write our `for` loop to handle any size of `NSArray` by writing the `for` statement like this:
+
+```objc
+for (NSUInteger i=0; i < [students count]; i++)
+```
+
 ## Conclusion
 
 These are just a few of the additional methods on `NSMutableArray`, but they're the ones you'll interact with the most. When you're ready, refer to the documentation on `NSArray` and `NSMutableArray` to learn more about what these classes can do.
