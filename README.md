@@ -368,7 +368,7 @@ for (NSUInteger i = 0; i < 3; i++) {
     NSLog(@"Welcome, %@!", students[i] );
 }
 ```
-This will cause a crash the prints:
+This will cause a crash that prints:
 
 ```
 Welcome, Joe!
@@ -377,7 +377,23 @@ Welcome, Mark!
 *** First throw call stack:
 ```
 
-Yikes! In order to avoid this problem, it's a best practice of "defensive programming" to *always* use the `count` method when iterating over an array.
+Yikes! In order to avoid this problem, it's a best practice of "defensive programming" to *always* use the `count` method when iterating over an array:
+
+```objc
+// good example
+
+NSArray *students = @[ @"Joe", @"Mark"];
+for (NSUInteger i = 0; i < [students count]; i++) {
+    NSLog(@"Welcome, %@!", students[i] );
+}
+```
+This will print:
+
+```
+Welcome, Joe!
+Welcome, Mark!
+```
+No crash this time!
 
 ## Conclusion
 
