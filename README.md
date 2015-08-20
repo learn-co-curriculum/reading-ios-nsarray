@@ -330,7 +330,7 @@ However, neither the subscript nor this method call can be used to insert a new 
 
 #### The `count` Method
 
-Sometimes you will need to know how many elements are contained in an array. You can get this information by calling the `count` method on the array in question. The most common use case of this is when limiting the number of iterations that a  `for` loop should run over the array. Let's say we have a loop that `NSLog()`s a greeting to each student whose name is held in an array:
+Sometimes you will need to know how many elements are contained in an array. You can get this information by calling the `count` method on the array in question. The most common usage case of this is when limiting the number of iterations that a  `for` loop should run over the array. Let's say we have a loop that `NSLog()`s a greeting to each student whose name is held in an array:
 
 ```objc
 NSArray *students = @[ @"Joe", @"Mark" ];
