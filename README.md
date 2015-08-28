@@ -85,7 +85,7 @@ The description of each object in the array's collection is printed on its own l
 
 #### Initializer Methods
 
-The literal syntax for `NSArray` was actually only introduced in iOS 6. Since it's relatively new, it's important to recognize the long-form syntax that the literal is calling on your behalf. This way you can recognize array initializers in examples you might find on Stack Overflow, or at your future workplace in application files that are than older 2012.
+The literal syntax for `NSArray` was actually only introduced in iOS 6. Since it's relatively new, it's important to recognize the long-form syntax that the literal is calling on your behalf. This way you can recognize array initializers in examples you might find on Stack Overflow, or at your future workplace in application files that are older than 2012.
 
 ```objc
 NSArray *instructors = [NSArray arrayWithObjects:@"Joe", @"Tim", @"Jim", @"Tom", @"Mark", nil];
