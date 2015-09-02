@@ -335,7 +335,7 @@ Sometimes you will need to know how many elements are contained in an array. You
 ```objc
 NSArray *students = @[ @"Joe", @"Mark" ];
 
-for (NSUInteger i=0, i < 2, i++) {
+for (NSUInteger i = 0; i < 2; i++) {
     NSLog(@"Welcome, %@!", students[i] );
 }
 ```
