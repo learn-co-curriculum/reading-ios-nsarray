@@ -5,7 +5,7 @@
 1. Understand the classification of collection types.
 2. Create an `NSArray` with literal syntax (`@[]`).
 3. Recognize method initializers and learn the role of `nil`.
-4. Create an `NSMutableArray` and how its type differs from `NSArray`.
+4. Create an `NSMutableArray` and learn how its type differs from `NSArray`.
 5. Query an array with methods and the array "sugar", a.k.a. "subscripting".
 6. Add and remove objects to and from an `NSMutableArray` with its own methods.
 7. Replace an object in a mutable array by using subscripting.
