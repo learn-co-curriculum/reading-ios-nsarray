@@ -399,4 +399,4 @@ No crash this time!
 
 These are just a few of the additional methods on `NSMutableArray`, but they're the ones you'll interact with the most. When you're ready, refer to the documentation about `NSArray` and `NSMutableArray` to learn more about what arrays can do.
 
-<a href='https://learn.co/lessons/reading-ios-nsarray' data-visibility='hidden'>View this lesson on Learn.co</a>
+<p data-visibility='hidden'>View <a href='https://learn.co/lessons/reading-ios-nsarray' title='NSArray & NSMutableArray'>NSArray & NSMutableArray</a> on Learn.co and start learning to code for free.</p>
