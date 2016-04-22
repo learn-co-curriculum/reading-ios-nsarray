@@ -99,7 +99,7 @@ You may come across either of these other examples of creating an array, and you
 
 #### The Role Of `nil`
 
-Notice the inclusion of `nil` at the end of the object list; `nil` is a notation that means "no-object" or "nothing". It's significant here because `nil` is acts as the "sentinel value" which tells the `-initWithObjects:` method when to stop looking for new objects. 
+Notice the inclusion of `nil` at the end of the object list; `nil` is a notation that means "no-object" or "nothing". It's significant here because `nil` acts as the "sentinel value" which tells the `-initWithObjects:` method when to stop looking for new objects. 
 
 **Note:** *One of the advantages of using the array literal syntax is that it doesn't require a sentinel value to mark the end of the objects list.*
 
@@ -400,3 +400,5 @@ No crash this time!
 These are just a few of the additional methods on `NSMutableArray`, but they're the ones you'll interact with the most. When you're ready, refer to the documentation about `NSArray` and `NSMutableArray` to learn more about what arrays can do.
 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/reading-ios-nsarray' title='NSArray & NSMutableArray'>NSArray & NSMutableArray</a> on Learn.co and start learning to code for free.</p>
+
+<p data-visibility='hidden'>View <a href='https://learn.co/lessons/reading-ios-nsarray'>NSArray & NSMutableArray</a> on Learn.co and start learning to code for free.</p>
